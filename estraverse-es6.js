@@ -25,29 +25,13 @@
 /*jslint vars:false, bitwise:true*/
 /*jshint indent:4*/
 /*global exports:true, define:true*/
-(function (root, factory) {
     'use strict';
 
-    // Universal Module Definition (UMD) to support AMD, CommonJS/Node.js,
-    // and plain browser loading,
-    if (typeof define === 'function' && define.amd) {
-        define(['exports'], factory);
-    } else if (typeof exports !== 'undefined') {
-        factory(exports);
-    } else {
-        factory((root.estraverse = {}));
-    }
-}(this, function (exports) {
-    'use strict';
-
-    var Syntax,
-        isArray,
-        VisitorOption,
-        VisitorKeys,
+    var isArray,
         BREAK,
         SKIP;
 
-    Syntax = {
+    export let Syntax = {
         AssignmentExpression: 'AssignmentExpression',
         ArrayExpression: 'ArrayExpression',
         ArrayPattern: 'ArrayPattern',
@@ -176,7 +160,7 @@
     }
     ignoreJSHintError(lowerBound);
 
-    VisitorKeys = {
+    export let VisitorKeys = {
         AssignmentExpression: ['left', 'right'],
         ArrayExpression: ['elements'],
         ArrayPattern: ['elements'],
@@ -233,7 +217,7 @@
     BREAK = {};
     SKIP = {};
 
-    VisitorOption = {
+    export let VisitorOption = {
         Break: BREAK,
         Skip: SKIP
     };
@@ -254,7 +238,7 @@
         this.ref = ref;
     }
 
-    function Controller() { }
+    export function Controller() { }
 
     // API:
     // return property path array from root to current node
@@ -551,12 +535,12 @@
         return outer.root;
     };
 
-    function traverse(root, visitor) {
+    export function traverse(root, visitor) {
         var controller = new Controller();
         return controller.traverse(root, visitor);
     }
 
-    function replace(root, visitor) {
+    export function replace(root, visitor) {
         var controller = new Controller();
         return controller.replace(root, visitor);
     }
@@ -582,7 +566,7 @@
         return comment;
     }
 
-    function attachComments(tree, providedComments, tokens) {
+    export function attachComments(tree, providedComments, tokens) {
         // At first, we should calculate extended comment ranges.
         var comments = [], comment, len, i, cursor;
 
@@ -677,18 +661,6 @@
         return tree;
     }
 
-    exports.version = '1.5.1-dev';
-    exports.Syntax = Syntax;
-    exports.traverse = traverse;
-    exports.replace = replace;
-    exports.attachComments = attachComments;
-    exports.VisitorKeys = VisitorKeys;
-    exports.VisitorOption = VisitorOption;
-    exports.Controller = Controller;
-}));
-
-export let traverse = exports.traverse;
-export let replace = exports.replace;
-export let attachComments = exports.attachComments;
+export let version = '1.5.1-dev';
 
 /* vim: set sw=4 ts=4 et tw=80 : */
